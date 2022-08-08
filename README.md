@@ -2,6 +2,6 @@
 
 <h1 align="center">
 
-![Rocket Help](https://raw.githubusercontent.com/newerton/ignite-lab-03-rocket-help/main/images/banner.png)
+![Rocket Help](https://raw.githubusercontent.com/newerton/images/main/ignite-lab-03-rocket-help/banner.png)
 
 </h1>
