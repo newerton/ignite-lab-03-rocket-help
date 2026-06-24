@@ -34,7 +34,7 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.29.6",
     "@types/react": "^19.1.4",
     "@types/react-native": "^0.72.8",
     "react-native-svg-transformer": "^1.5.1",
