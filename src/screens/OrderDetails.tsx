@@ -1,28 +1,26 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { HStack, ScrollView, Text, useTheme, VStack } from "native-base";
-import { Header } from "../components/Header";
-
+import { yupResolver } from '@hookform/resolvers/yup';
 import firestore, {
-  FirebaseFirestoreTypes,
-} from "@react-native-firebase/firestore";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import { Loading } from "../components/Loading";
+  type FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import { HStack, ScrollView, Text, VStack, useTheme } from 'native-base';
 import {
   CircleWavyCheck,
-  Clipboard,
   ClipboardText,
   DesktopTower,
   Hourglass,
-} from "phosphor-react-native";
-import { OrderCardDetails } from "../components/OrderCardDetails";
+} from 'phosphor-react-native';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
 
-import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ControlledTextField from "../components/ControlledTextField";
-import { Alert } from "react-native";
-import { Button } from "../components/Button";
+import * as Yup from 'yup';
+import { Button } from '../components/Button';
+import ControlledTextField from '../components/ControlledTextField';
+import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
+import { OrderCardDetails } from '../components/OrderCardDetails';
 
 type RouteParams = {
   id: string;
@@ -32,7 +30,7 @@ type OrderDTO = {
   id: string;
   patrimony: string;
   description: string;
-  status: "open" | "closed";
+  status: 'open' | 'closed';
   solution?: string;
   created_at?: FirebaseFirestoreTypes.Timestamp;
   closed_at?: FirebaseFirestoreTypes.Timestamp;
@@ -51,11 +49,11 @@ type OrderDetailsFormData = {
 };
 
 const initialValues = {
-  solution: "",
+  solution: '',
 };
 
 const OrderDetailsSchema = Yup.object({
-  solution: Yup.string().required("Solução é obrigatório").label("Solução"),
+  solution: Yup.string().required('Solução é obrigatório').label('Solução'),
 });
 
 export function OrderDetails() {
@@ -80,7 +78,7 @@ export function OrderDetails() {
 
   useEffect(() => {
     firestore()
-      .collection<OrderDTO>("orders")
+      .collection<OrderDTO>('orders')
       .doc(id)
       .get()
       .then((doc) => {
@@ -94,7 +92,7 @@ export function OrderDetails() {
         } = doc.data();
 
         const closed = closed_at
-          ? dayjs(closed_at.toDate()).format("DD/MM/YYYY HH:mm")
+          ? dayjs(closed_at.toDate()).format('DD/MM/YYYY HH:mm')
           : null;
 
         setOrder({
@@ -103,7 +101,7 @@ export function OrderDetails() {
           description,
           status,
           solution,
-          when: dayjs(created_at.toDate()).format("DD/MM/YYYY HH:mm"),
+          when: dayjs(created_at.toDate()).format('DD/MM/YYYY HH:mm'),
           closed,
         });
 
@@ -115,15 +113,15 @@ export function OrderDetails() {
     setIsSubmitting(true);
 
     firestore()
-      .collection("orders")
+      .collection('orders')
       .doc(id)
       .update({
         solution: data.solution,
-        status: "closed",
+        status: 'closed',
         closed_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        Alert.alert("Solicitação", "Solicitação atualizada com sucesso");
+        Alert.alert('Solicitação', 'Solicitação atualizada com sucesso');
         reset();
         setIsSubmitting(false);
         navigation.goBack();
@@ -131,7 +129,7 @@ export function OrderDetails() {
       .catch((error) => {
         console.log(error);
         setIsSubmitting(false);
-        Alert.alert("Solicitação", "Erro ao atualizar solicitação");
+        Alert.alert('Solicitação', 'Erro ao atualizar solicitação');
       });
   };
 
@@ -144,22 +142,22 @@ export function OrderDetails() {
       <Header title="Solicitação" />
 
       <HStack bg="gray.500" justifyContent="center" p={4}>
-        {order.status === "closed" ? (
+        {order.status === 'closed' ? (
           <CircleWavyCheck size={22} color={colors.green[300]} />
         ) : (
           <Hourglass size={22} color={colors.secondary[700]} />
         )}
         <Text
-          fontSize={"sm"}
+          fontSize={'sm'}
           color={
-            order.status === "closed"
+            order.status === 'closed'
               ? colors.green[300]
               : colors.secondary[700]
           }
           ml={2}
           textTransform="uppercase"
         >
-          {order.status === "closed" ? "Finalizado" : "Em andamento"}
+          {order.status === 'closed' ? 'Finalizado' : 'Em andamento'}
         </Text>
       </HStack>
 
@@ -196,7 +194,7 @@ export function OrderDetails() {
         </OrderCardDetails>
       </ScrollView>
 
-      {order.status === "open" && (
+      {order.status === 'open' && (
         <Button
           title="Finalizar"
           onPress={handleSubmit(handleUpdateOrderRegister)}

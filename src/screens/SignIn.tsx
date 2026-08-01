@@ -1,28 +1,27 @@
-import { Alert } from "react-native";
-import { Heading, Icon, useTheme, VStack } from "native-base";
-import { Envelope, Key } from "phosphor-react-native";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import ControlledTextField from "../components/ControlledTextField";
-import { Button } from "../components/Button";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from '@hookform/resolvers/yup';
+import auth from '@react-native-firebase/auth';
+import { Heading, Icon, VStack, useTheme } from 'native-base';
+import { Envelope, Key } from 'phosphor-react-native';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
+import * as Yup from 'yup';
 
-import Logo from "../assets/logo_primary.svg";
-
-import auth from "@react-native-firebase/auth";
-import * as Yup from "yup";
+import Logo from '../assets/logo_primary.svg';
+import { Button } from '../components/Button';
+import ControlledTextField from '../components/ControlledTextField';
 
 const initialValues = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const SignInSchema = Yup.object({
-  email: Yup.string().email("E-mail inválido").required("E-mail é obrigatório"),
+  email: Yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
   password: Yup.string()
-    .min(6, "O mínomo requerido é 6 caracteres")
-    .required("Senha é obrrigatório")
-    .label("Senha"),
+    .min(6, 'O mínomo requerido é 6 caracteres')
+    .required('Senha é obrrigatório')
+    .label('Senha'),
 });
 
 type SignInFormData = {
@@ -49,11 +48,11 @@ export function SignIn() {
       .signInWithEmailAndPassword(data.email, data.password)
       .catch((error) => {
         setIsSubmitting(false);
-        if (error.code === "auth/invalid-email") {
-          return Alert.alert("Entrar", "E-mail inválido");
+        if (error.code === 'auth/invalid-email') {
+          return Alert.alert('Entrar', 'E-mail inválido');
         }
 
-        return Alert.alert("Entrar", "E-mail ou Senha inválidos");
+        return Alert.alert('Entrar', 'E-mail ou Senha inválidos');
       });
   };
 

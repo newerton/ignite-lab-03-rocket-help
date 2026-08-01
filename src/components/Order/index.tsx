@@ -2,23 +2,23 @@ import {
   Box,
   Circle,
   HStack,
-  IPressableProps,
+  type IPressableProps,
   Pressable,
   Text,
-  useTheme,
   VStack,
-} from "native-base";
+  useTheme,
+} from 'native-base';
 import {
   CircleWavyCheck,
   ClockAfternoon,
   Hourglass,
-} from "phosphor-react-native";
+} from 'phosphor-react-native';
 
 export type OrderProps = {
   id: string;
   patrimony: string;
   when: string;
-  status: "open" | "closed";
+  status: 'open' | 'closed';
 };
 
 type Props = IPressableProps & {
@@ -28,7 +28,7 @@ type Props = IPressableProps & {
 export function Order({ data, ...rest }: Props) {
   const { colors } = useTheme();
   const statusColor =
-    data.status === "open" ? colors.secondary[700] : colors.green[700];
+    data.status === 'open' ? colors.secondary[700] : colors.green[700];
   return (
     <Pressable {...rest}>
       <HStack
@@ -54,7 +54,7 @@ export function Order({ data, ...rest }: Props) {
         </VStack>
 
         <Circle bg="gray.500" h={12} w={12} mr={5}>
-          {data.status === "closed" ? (
+          {data.status === 'closed' ? (
             <CircleWavyCheck size={24} color={statusColor} />
           ) : (
             <Hourglass size={24} color={statusColor} />

@@ -1,4 +1,8 @@
-import { Button as NativeBaseButton, Heading, IButtonProps } from "native-base";
+import {
+  Heading,
+  type IButtonProps,
+  Button as NativeBaseButton,
+} from 'native-base';
 
 type ButtonProps = IButtonProps & {
   title: string;
@@ -12,7 +16,7 @@ export function Button({ title, ...rest }: ButtonProps) {
       fontSize="sm"
       rounded="sm"
       _pressed={{
-        bg: "green.500",
+        bg: 'green.500',
       }}
       {...rest}
     >

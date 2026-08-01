@@ -1,29 +1,27 @@
-import { VStack } from "native-base";
-import { useRef, useState } from "react";
-import { Button } from "../components/Button";
-import { Header } from "../components/Header";
-
-import * as Yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import ControlledTextField from "../components/ControlledTextField";
-
-import firestore from "@react-native-firebase/firestore";
-import { Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { yupResolver } from '@hookform/resolvers/yup';
+import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import { VStack } from 'native-base';
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
+import * as Yup from 'yup';
+import { Button } from '../components/Button';
+import ControlledTextField from '../components/ControlledTextField';
+import { Header } from '../components/Header';
 
 const initialValues = {
-  patrimony: "",
-  description: "",
+  patrimony: '',
+  description: '',
 };
 
 const OrderRegisterSchema = Yup.object({
   patrimony: Yup.string()
-    .required("Patrimônio é obrigatório")
-    .label("Patrimônio"),
+    .required('Patrimônio é obrigatório')
+    .label('Patrimônio'),
   description: Yup.string()
-    .required("Descrição é obrrigatório")
-    .label("Descrição"),
+    .required('Descrição é obrrigatório')
+    .label('Descrição'),
 });
 
 type OrderRegisterFormData = {
@@ -50,15 +48,15 @@ export function OrderRegister() {
     setIsSubmitting(true);
 
     firestore()
-      .collection("orders")
+      .collection('orders')
       .add({
         patrimony: data.patrimony,
         description: data.description,
-        status: "open",
+        status: 'open',
         created_at: firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        Alert.alert("Solicitação", "Solicitação registrada com sucesso");
+        Alert.alert('Solicitação', 'Solicitação registrada com sucesso');
         reset();
         setIsSubmitting(false);
         navigation.goBack();
@@ -66,7 +64,7 @@ export function OrderRegister() {
       .catch((error) => {
         console.log(error);
         setIsSubmitting(false);
-        Alert.alert("Solicitação", "Erro ao registrar solicitação");
+        Alert.alert('Solicitação', 'Erro ao registrar solicitação');
       });
   };
 

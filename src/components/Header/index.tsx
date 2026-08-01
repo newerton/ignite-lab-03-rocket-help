@@ -1,13 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 import {
-  Heading,
   HStack,
+  Heading,
   IconButton,
-  StyledProps,
+  type StyledProps,
   useTheme,
-  VStack,
-} from "native-base";
-import { CaretLeft } from "phosphor-react-native";
+} from 'native-base';
+import { CaretLeft } from 'phosphor-react-native';
 
 type HeaderProps = StyledProps & {
   title: string;

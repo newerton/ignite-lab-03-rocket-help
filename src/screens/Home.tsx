@@ -1,35 +1,33 @@
-import { useNavigation } from "@react-navigation/native";
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import {
   Center,
   FlatList,
-  Heading,
   HStack,
+  Heading,
   IconButton,
   Text,
-  useTheme,
   VStack,
-} from "native-base";
-import { ChatTeardropText, SignOut } from "phosphor-react-native";
-import { useEffect, useState } from "react";
-
-import Logo from "../assets/logo_secondary.svg";
-import { Button } from "../components/Button";
-import { Filter } from "../components/Filter";
-import { Order, OrderProps } from "../components/Order";
-import { Alert } from "react-native";
-
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
-import dayjs, { unix } from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
-import { Loading } from "../components/Loading";
+  useTheme,
+} from 'native-base';
+import { ChatTeardropText, SignOut } from 'phosphor-react-native';
+import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+import Logo from '../assets/logo_secondary.svg';
+import { Button } from '../components/Button';
+import { Filter } from '../components/Filter';
+import { Loading } from '../components/Loading';
+import { Order, type OrderProps } from '../components/Order';
 
 dayjs.extend(customParseFormat);
 
 export function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [statusSelected, setStatusSelected] = useState<"open" | "closed">(
-    "open"
+  const [statusSelected, setStatusSelected] = useState<'open' | 'closed'>(
+    'open',
   );
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
@@ -39,8 +37,8 @@ export function Home() {
   useEffect(() => {
     setIsLoading(true);
     const unsubscribe = firestore()
-      .collection("orders")
-      .where("status", "==", statusSelected)
+      .collection('orders')
+      .where('status', '==', statusSelected)
       .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => {
           const { patrimony, description, status, created_at } = doc.data();
@@ -52,16 +50,16 @@ export function Home() {
             status,
             when:
               created_at &&
-              dayjs(created_at.toDate()).format("DD/MM/YYYY HH:mm"),
+              dayjs(created_at.toDate()).format('DD/MM/YYYY HH:mm'),
           };
         });
 
-        data.sort(function (a: any, b: any) {
-          const c = dayjs(a.when, "DD/MM/YYYY HH:mm").unix();
-          const d = dayjs(b.when, "DD/MM/YYYY HH:mm").unix();
+        data.sort((a: any, b: any) => {
+          const c = dayjs(a.when, 'DD/MM/YYYY HH:mm').unix();
+          const d = dayjs(b.when, 'DD/MM/YYYY HH:mm').unix();
           return d - c;
         });
-        
+
         setOrders(data);
         setIsLoading(false);
       });
@@ -69,17 +67,17 @@ export function Home() {
   }, [statusSelected]);
 
   const handleNewOrder = () => {
-    navigation.navigate("order-register");
+    navigation.navigate('order-register');
   };
 
   const handleOpenDetails = (id: string) => {
-    navigation.navigate("order-details", { id });
+    navigation.navigate('order-details', { id });
   };
 
   const handleLogout = () => {
     auth()
       .signOut()
-      .catch(() => Alert.alert("Sair", "Não foi possível sair"));
+      .catch(() => Alert.alert('Sair', 'Não foi possível sair'));
   };
 
   return (
@@ -117,14 +115,14 @@ export function Home() {
           <Filter
             type="open"
             title="em andamento"
-            onPress={() => setStatusSelected("open")}
-            isActive={statusSelected === "open"}
+            onPress={() => setStatusSelected('open')}
+            isActive={statusSelected === 'open'}
           />
           <Filter
             type="closed"
             title="finalizados"
-            onPress={() => setStatusSelected("closed")}
-            isActive={statusSelected === "closed"}
+            onPress={() => setStatusSelected('closed')}
+            isActive={statusSelected === 'closed'}
           />
         </HStack>
 
@@ -147,8 +145,8 @@ export function Home() {
               <Center flex={1}>
                 <ChatTeardropText color={colors.gray[300]} size={40} />
                 <Text color="gray.300" fontSize="xl" mt={6} textAlign="center">
-                  Você ainda não possui {"\n"} solicitações{" "}
-                  {statusSelected === "open" ? "em andamento" : "finalizadas"}
+                  Você ainda não possui {'\n'} solicitações{' '}
+                  {statusSelected === 'open' ? 'em andamento' : 'finalizadas'}
                 </Text>
               </Center>
             )}

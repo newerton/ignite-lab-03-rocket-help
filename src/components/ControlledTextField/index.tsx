@@ -1,7 +1,7 @@
-import { IInputProps } from "native-base";
-import { forwardRef } from "react";
-import { Controller, FieldError } from "react-hook-form";
-import TextField from "../TextField";
+import type { IInputProps } from 'native-base';
+import { forwardRef } from 'react';
+import { Controller, type FieldError } from 'react-hook-form';
+import TextField from '../TextField';
 
 type ControlledTextFieldProps = IInputProps & {
   name: string;
@@ -12,18 +12,16 @@ type ControlledTextFieldProps = IInputProps & {
 
 const ControlledTextField = (
   { name, control, ...props }: ControlledTextFieldProps,
-  ref: any
+  ref: any,
 ) => {
   return (
-    <>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextField onChangeText={onChange} value={value} ref={ref} {...props} />
-        )}
-      />
-    </>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { onChange, value } }) => (
+        <TextField onChangeText={onChange} value={value} ref={ref} {...props} />
+      )}
+    />
   );
 };
 
