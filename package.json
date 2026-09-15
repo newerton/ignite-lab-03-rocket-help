@@ -29,7 +29,7 @@
     "react-hook-form": "^7.88.0",
     "react-native": "^0.87.1",
     "react-native-safe-area-context": "^5.9.1",
-    "react-native-screens": "^4.27.0",
+    "react-native-screens": "^4.28.0",
     "react-native-svg": "^15.15.5",
     "react-native-web": "^0.21.2",
     "yup": "^1.7.1"
@@ -46,7 +46,7 @@
     "uuid": "^14.0.1",
     "js-yaml": "^5.2.3",
     "protobufjs": "^8.7.1",
-    "image-size": "^2.0.2",
+    "image-size": "^2.0.4",
     "nanoid": "^6.0.1",
     "decode-uri-component": "^0.5.0"
   },
