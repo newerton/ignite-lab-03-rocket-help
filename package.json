@@ -44,7 +44,7 @@
   },
   "overrides": {
     "uuid": "^14.0.1",
-    "js-yaml": "^5.2.3",
+    "js-yaml": "^5.4.2",
     "protobufjs": "^8.7.1",
     "image-size": "^2.0.4",
     "nanoid": "^6.0.1",
